@@ -136,15 +136,15 @@ public class MainActivity extends AppCompatActivity {
             while (true) {
                 if (allow[0]) {
 //                    float r = binding.sliderR.getValue();
-                    mBluetooth.write(HelperUtils.toBytesFloat('R', rgb[0], 3));
+                    mBluetooth.write(HelperUtils.toBytes('R', rgb[0], 3));
                 }
                 if (allow[1]) {
 //                    float g = binding.sliderG.getValue();
-                    mBluetooth.write(HelperUtils.toBytesFloat('G', rgb[1], 3));
+                    mBluetooth.write(HelperUtils.toBytes('G', rgb[1], 3));
                 }
                 if (allow[2]) {
 //                    float b = binding.sliderB.getValue();
-                    mBluetooth.write(HelperUtils.toBytesFloat('B', rgb[2], 3));
+                    mBluetooth.write(HelperUtils.toBytes('B', rgb[2], 3));
                 }
                 synchronized (this) {
                     try {

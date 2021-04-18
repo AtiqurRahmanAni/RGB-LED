@@ -179,7 +179,7 @@ public class Bluetooth {
                     if (disconnecting) {
                         connectionLost();
                     }
-                    this.start();
+                    Bluetooth.this.start();
                     return;
                 }
             }
