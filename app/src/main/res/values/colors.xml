@@ -12,4 +12,5 @@
     <color name="blue">#0000FF</color>
     <color name="trans_white">#EEFFFFFF</color>
     <color name="trans_red">#99FF0000</color>
+    <color name="scroll_thumb">#52FF0000</color>
 </resources>
