@@ -17,6 +17,7 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <LinearLayout
+        android:id="@+id/linearLayout"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/_30sdp"
@@ -40,6 +41,7 @@
             android:textColor="@color/red"
             android:textSize="@dimen/_16sdp"
             android:textStyle="bold" />
+
         <View
             android:layout_width="0dp"
             android:layout_height="match_parent"
@@ -74,6 +76,117 @@
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="@dimen/_10sdp"
+        android:layout_marginTop="30dp"
+        android:background="@color/trans_white"
+        android:orientation="vertical"
+        app:layout_constraintTop_toBottomOf="@+id/linearLayout"
+        tools:layout_editor_absoluteX="0dp">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/roboto_light"
+            android:text="Color Presets"
+            android:textColor="@color/red"
+            android:textSize="@dimen/_18sdp"
+            android:textStyle="bold" />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/_2sdp"
+            android:layout_marginTop="@dimen/_10sdp"
+            android:layout_marginBottom="@dimen/_5sdp"
+            android:background="@color/red" />
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginVertical="@dimen/_10sdp"
+            android:background="@color/trans_white"
+            android:gravity="center"
+            android:orientation="horizontal">
+
+            <View
+                android:id="@+id/color1"
+                android:layout_width="@dimen/_50sdp"
+                android:layout_height="@dimen/_50sdp"
+                android:layout_marginHorizontal="@dimen/_10sdp"
+                android:background="@drawable/color_background"
+                android:backgroundTint="@color/red" />
+
+            <View
+                android:id="@+id/color2"
+                android:layout_width="@dimen/_50sdp"
+                android:layout_height="@dimen/_50sdp"
+                android:layout_marginHorizontal="@dimen/_10sdp"
+                android:background="@drawable/color_background"
+                android:backgroundTint="#FFFF00" />
+
+            <View
+                android:id="@+id/color3"
+                android:layout_width="@dimen/_50sdp"
+                android:layout_height="@dimen/_50sdp"
+                android:layout_marginHorizontal="@dimen/_10sdp"
+                android:background="@drawable/color_background"
+                android:backgroundTint="#00FFFF	" />
+
+            <View
+                android:id="@+id/color4"
+                android:layout_width="@dimen/_50sdp"
+                android:layout_height="@dimen/_50sdp"
+                android:layout_marginHorizontal="@dimen/_10sdp"
+                android:background="@drawable/color_background"
+                android:backgroundTint="#FF1493" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:orientation="horizontal">
+
+            <View
+                android:id="@+id/color5"
+                android:layout_width="@dimen/_50sdp"
+                android:layout_height="@dimen/_50sdp"
+                android:layout_marginHorizontal="@dimen/_10sdp"
+                android:background="@drawable/color_background"
+                android:backgroundTint="#673AB7"/>
+
+            <View
+                android:id="@+id/color6"
+                android:layout_width="@dimen/_50sdp"
+                android:layout_height="@dimen/_50sdp"
+                android:layout_marginHorizontal="@dimen/_10sdp"
+                android:background="@drawable/color_background"
+                android:backgroundTint="#D2691E" />
+
+            <View
+                android:id="@+id/color7"
+                android:layout_width="@dimen/_50sdp"
+                android:layout_height="@dimen/_50sdp"
+                android:layout_marginHorizontal="@dimen/_10sdp"
+                android:background="@drawable/color_background"
+                android:backgroundTint="#FF9800" />
+
+            <View
+                android:id="@+id/color8"
+                android:layout_width="@dimen/_50sdp"
+                android:layout_height="@dimen/_50sdp"
+                android:layout_marginHorizontal="@dimen/_10sdp"
+                android:background="@drawable/color_background"
+                android:backgroundTint="@color/green" />
+
+        </LinearLayout>
+
     </LinearLayout>
 
 

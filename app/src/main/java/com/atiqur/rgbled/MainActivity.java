@@ -3,7 +3,11 @@ package com.atiqur.rgbled;
 import android.annotation.SuppressLint;
 import android.bluetooth.BluetoothAdapter;
 import android.content.Intent;
+import android.content.res.ColorStateList;
+import android.graphics.Bitmap;
 import android.graphics.Color;
+import android.graphics.ColorFilter;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
@@ -61,6 +65,7 @@ public class MainActivity extends AppCompatActivity {
         setPageViewPager();
     }
 
+    @SuppressLint("ClickableViewAccessibility")
     private void setColorPicker() {
         adapter.getFragmentOne().getBinding().picker.setShowOldCenterColor(false);
         Color color1 = Color.valueOf(adapter.getFragmentOne().getBinding().picker.getColor());
@@ -78,9 +83,62 @@ public class MainActivity extends AppCompatActivity {
             adapter.getFragmentOne().getBinding().colorR.setText(String.format("R: %.3s", rgb[0]));
             adapter.getFragmentOne().getBinding().colorG.setText(String.format("G: %.3s", rgb[1]));
             adapter.getFragmentOne().getBinding().colorB.setText(String.format("B: %.3s", rgb[2]));
-//            Log.d("Color", rgb[0] + "");
-//            Log.d("Color", rgb[1] + "");
-//            Log.d("Color", rgb[2] + "");
+        });
+        adapter.getFragmentOne().getBinding().color1.setOnTouchListener((v, event) -> {
+            if(event.getAction() == MotionEvent.ACTION_DOWN){
+                ColorStateList colorStateList = adapter.getFragmentOne().getBinding().color1.getBackgroundTintList();
+                adapter.getFragmentOne().getBinding().picker.setColor(colorStateList.getDefaultColor());
+            }
+            return false;
+        });
+        adapter.getFragmentOne().getBinding().color2.setOnTouchListener((v, event) -> {
+            if(event.getAction() == MotionEvent.ACTION_DOWN){
+                ColorStateList colorStateList = adapter.getFragmentOne().getBinding().color2.getBackgroundTintList();
+                adapter.getFragmentOne().getBinding().picker.setColor(colorStateList.getDefaultColor());
+            }
+            return false;
+        });
+        adapter.getFragmentOne().getBinding().color3.setOnTouchListener((v, event) -> {
+            if(event.getAction() == MotionEvent.ACTION_DOWN){
+                ColorStateList colorStateList = adapter.getFragmentOne().getBinding().color3.getBackgroundTintList();
+                adapter.getFragmentOne().getBinding().picker.setColor(colorStateList.getDefaultColor());
+            }
+            return false;
+        });
+        adapter.getFragmentOne().getBinding().color4.setOnTouchListener((v, event) -> {
+            if(event.getAction() == MotionEvent.ACTION_DOWN){
+                ColorStateList colorStateList = adapter.getFragmentOne().getBinding().color4.getBackgroundTintList();
+                adapter.getFragmentOne().getBinding().picker.setColor(colorStateList.getDefaultColor());
+            }
+            return false;
+        });
+        adapter.getFragmentOne().getBinding().color5.setOnTouchListener((v, event) -> {
+            if(event.getAction() == MotionEvent.ACTION_DOWN){
+                ColorStateList colorStateList = adapter.getFragmentOne().getBinding().color5.getBackgroundTintList();
+                adapter.getFragmentOne().getBinding().picker.setColor(colorStateList.getDefaultColor());
+            }
+            return false;
+        });
+        adapter.getFragmentOne().getBinding().color6.setOnTouchListener((v, event) -> {
+            if(event.getAction() == MotionEvent.ACTION_DOWN){
+                ColorStateList colorStateList = adapter.getFragmentOne().getBinding().color6.getBackgroundTintList();
+                adapter.getFragmentOne().getBinding().picker.setColor(colorStateList.getDefaultColor());
+            }
+            return false;
+        });
+        adapter.getFragmentOne().getBinding().color7.setOnTouchListener((v, event) -> {
+            if(event.getAction() == MotionEvent.ACTION_DOWN){
+                ColorStateList colorStateList = adapter.getFragmentOne().getBinding().color7.getBackgroundTintList();
+                adapter.getFragmentOne().getBinding().picker.setColor(colorStateList.getDefaultColor());
+            }
+            return false;
+        });
+        adapter.getFragmentOne().getBinding().color8.setOnTouchListener((v, event) -> {
+            if(event.getAction() == MotionEvent.ACTION_DOWN){
+                ColorStateList colorStateList = adapter.getFragmentOne().getBinding().color8.getBackgroundTintList();
+                adapter.getFragmentOne().getBinding().picker.setColor(colorStateList.getDefaultColor());
+            }
+            return false;
         });
     }
 

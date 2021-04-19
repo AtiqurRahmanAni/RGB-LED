@@ -5,4 +5,7 @@
     <size
         android:width="@dimen/_120sdp"
         android:height="@dimen/_120sdp"/>
+    <stroke
+        android:width="2dp"
+        android:color="@color/black"/>
 </shape>
