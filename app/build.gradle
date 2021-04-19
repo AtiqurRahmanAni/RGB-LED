@@ -45,4 +45,7 @@ dependencies {
 
     //sdp
     implementation 'com.intuit.sdp:sdp-android:1.0.6'
+
+    //colorpicker
+    implementation 'com.larswerkman:HoloColorPicker:1.5'
 }

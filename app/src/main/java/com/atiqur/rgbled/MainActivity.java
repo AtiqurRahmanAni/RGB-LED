@@ -12,6 +12,7 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.MotionEvent;
+import android.view.View;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -20,13 +21,14 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
 
 import com.atiqur.rgbled.databinding.ActivityMainBinding;
+import com.atiqur.rgbled.fragments.FragmentOne;
 import com.atiqur.rgbled.utils.HelperUtils;
 import com.atiqur.rgbled.utils.ToolbarHelper;
-import com.google.android.material.slider.Slider;
 
 public class MainActivity extends AppCompatActivity {
 
     ActivityMainBinding binding;
+    ViewPagerAdapter adapter;
     private boolean menuCreated = false;
     private BluetoothAdapter mBluetoothAdapter = null;
     public Bluetooth mBluetooth = null;
@@ -36,24 +38,65 @@ public class MainActivity extends AppCompatActivity {
     private boolean isConnected = false;
     private Menu menu;
     private Thread mRGBThread;
-    private final int[] rgb ={0,0,0};
-    private final boolean[] allow ={false,false,false};
+    public final int[] rgb = {0, 0, 0};
+    private final int[] prgb = {0, 0, 0};
+    private final boolean[] allow = {false, false, false};
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         binding = ActivityMainBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
+        init();
+        new Handler().postDelayed(() -> {
+            setSliderListener();
+            setColorPicker();
+        }, 500);
+    }
 
-        ToolbarHelper.create(binding.toolbar,null,this,"RGB LED");
-        setSliderListener();
+    private void init() {
+
+        ToolbarHelper.create(binding.toolbar, null, this, "RGB LED");
+        adapter = new ViewPagerAdapter(this);
+        setPageViewPager();
+    }
+
+    private void setColorPicker() {
+        adapter.getFragmentOne().getBinding().picker.setShowOldCenterColor(false);
+        Color color1 = Color.valueOf(adapter.getFragmentOne().getBinding().picker.getColor());
+        rgb[0] = (int) (color1.red() * 255);
+        rgb[1] = (int) (color1.green() * 255);
+        rgb[2] = (int) (color1.blue() * 255);
+        adapter.getFragmentOne().getBinding().colorR.setText(String.format("R: %.3s", rgb[0]));
+        adapter.getFragmentOne().getBinding().colorG.setText(String.format("G: %.3s", rgb[1]));
+        adapter.getFragmentOne().getBinding().colorB.setText(String.format("B: %.3s", rgb[2]));
+        adapter.getFragmentOne().getBinding().picker.setOnColorChangedListener(color -> {
+            Color color2 = Color.valueOf(color);
+            rgb[0] = (int) (color2.red() * 255);
+            rgb[1] = (int) (color2.green() * 255);
+            rgb[2] = (int) (color2.blue() * 255);
+            adapter.getFragmentOne().getBinding().colorR.setText(String.format("R: %.3s", rgb[0]));
+            adapter.getFragmentOne().getBinding().colorG.setText(String.format("G: %.3s", rgb[1]));
+            adapter.getFragmentOne().getBinding().colorB.setText(String.format("B: %.3s", rgb[2]));
+//            Log.d("Color", rgb[0] + "");
+//            Log.d("Color", rgb[1] + "");
+//            Log.d("Color", rgb[2] + "");
+        });
+    }
+
+    private void setPageViewPager() {
+        binding.viewPager2.setAdapter(adapter);
+        binding.viewPager2.setOffscreenPageLimit(2);
     }
 
     @Override
     protected void onResume() {
         super.onResume();
-        binding.textViewR.setText(String.format("R : %.3s",(int)binding.sliderR.getValue()));
-        binding.textViewG.setText(String.format("G : %.3s",(int)binding.sliderG.getValue()));
-        binding.textViewB.setText(String.format("B : %.3s",(int)binding.sliderB.getValue()));
+        if (adapter.getFragmentTwo().getBinding() != null) {
+            adapter.getFragmentTwo().getBinding().textViewR.setText(String.format("R : %.3s", (int) adapter.getFragmentTwo().getBinding().sliderR.getValue()));
+            adapter.getFragmentTwo().getBinding().textViewG.setText(String.format("G : %.3s", (int) adapter.getFragmentTwo().getBinding().sliderG.getValue()));
+            adapter.getFragmentTwo().getBinding().textViewB.setText(String.format("B : %.3s", (int) adapter.getFragmentTwo().getBinding().sliderB.getValue()));
+        }
         checkBluetooth();
         if (mBluetooth == null) {
             mBluetooth = new Bluetooth(mHandler);
@@ -81,8 +124,8 @@ public class MainActivity extends AppCompatActivity {
 
     @SuppressLint("ClickableViewAccessibility")
     private void setSliderListener() {
-        binding.sliderR.setOnTouchListener((v, event) -> {
-            rgb[0]=(int)binding.sliderR.getValue();
+        adapter.getFragmentTwo().getBinding().sliderR.setOnTouchListener((v, event) -> {
+            rgb[0] = (int) adapter.getFragmentTwo().getBinding().sliderR.getValue();
             setBackground();
             if (event.getAction() == MotionEvent.ACTION_DOWN || event.getAction() == MotionEvent.ACTION_MOVE) {
                 if (!allow[0] && mBluetooth.getState() == 2) {
@@ -91,14 +134,14 @@ public class MainActivity extends AppCompatActivity {
             } else if (event.getAction() == MotionEvent.ACTION_UP) {
                 allow[0] = false;
             }
-            binding.textViewR.setText(String.format("R : %.3s", rgb[0]));
+            adapter.getFragmentTwo().getBinding().textViewR.setText(String.format("R : %.3s", rgb[0]));
             if (event.getAction() == MotionEvent.ACTION_DOWN && mBluetooth.getState() != 2) {
                 Toast.makeText(MainActivity.this, "You are not connected to a device", Toast.LENGTH_SHORT).show();
             }
             return false;
         });
-        binding.sliderG.setOnTouchListener((v, event) -> {
-            rgb[1]=(int)binding.sliderG.getValue();
+        adapter.getFragmentTwo().getBinding().sliderG.setOnTouchListener((v, event) -> {
+            rgb[1] = (int) adapter.getFragmentTwo().getBinding().sliderG.getValue();
             setBackground();
             if (event.getAction() == MotionEvent.ACTION_DOWN || event.getAction() == MotionEvent.ACTION_MOVE) {
                 if (!allow[1] && mBluetooth.getState() == 2) {
@@ -107,14 +150,14 @@ public class MainActivity extends AppCompatActivity {
             } else if (event.getAction() == MotionEvent.ACTION_UP) {
                 allow[1] = false;
             }
-            binding.textViewG.setText(String.format("G : %.3s", rgb[1]));
+            adapter.getFragmentTwo().getBinding().textViewG.setText(String.format("G : %.3s", rgb[1]));
             if (event.getAction() == MotionEvent.ACTION_DOWN && mBluetooth.getState() != 2) {
                 Toast.makeText(MainActivity.this, "You are not connected to a device", Toast.LENGTH_SHORT).show();
             }
             return false;
         });
-        binding.sliderB.setOnTouchListener((v, event) -> {
-            rgb[2]=(int)binding.sliderB.getValue();
+        adapter.getFragmentTwo().getBinding().sliderB.setOnTouchListener((v, event) -> {
+            rgb[2] = (int) adapter.getFragmentTwo().getBinding().sliderB.getValue();
             setBackground();
             if (event.getAction() == MotionEvent.ACTION_DOWN || event.getAction() == MotionEvent.ACTION_MOVE) {
                 if (!allow[2] && mBluetooth.getState() == 2) {
@@ -123,7 +166,7 @@ public class MainActivity extends AppCompatActivity {
             } else if (event.getAction() == MotionEvent.ACTION_UP) {
                 allow[2] = false;
             }
-            binding.textViewB.setText(String.format("B : %.3s", rgb[2]));
+            adapter.getFragmentTwo().getBinding().textViewB.setText(String.format("B : %.3s", rgb[2]));
             if (event.getAction() == MotionEvent.ACTION_DOWN && mBluetooth.getState() != 2) {
                 Toast.makeText(MainActivity.this, "You are not connected to a device", Toast.LENGTH_SHORT).show();
             }
@@ -134,16 +177,16 @@ public class MainActivity extends AppCompatActivity {
     private final Runnable sendValue = new Runnable() {
         public void run() {
             while (true) {
-                if (allow[0]) {
-//                    float r = binding.sliderR.getValue();
+                if (allow[0] || prgb[0] != rgb[0]) {
+                    prgb[0] = rgb[0];
                     mBluetooth.write(HelperUtils.toBytes('R', rgb[0], 3));
                 }
-                if (allow[1]) {
-//                    float g = binding.sliderG.getValue();
+                if (allow[1] || prgb[1] != rgb[1]) {
+                    prgb[1] = rgb[1];
                     mBluetooth.write(HelperUtils.toBytes('G', rgb[1], 3));
                 }
-                if (allow[2]) {
-//                    float b = binding.sliderB.getValue();
+                if (allow[2] || prgb[2] != rgb[2]) {
+                    prgb[2] = rgb[2];
                     mBluetooth.write(HelperUtils.toBytes('B', rgb[2], 3));
                 }
                 synchronized (this) {
@@ -157,8 +200,8 @@ public class MainActivity extends AppCompatActivity {
         }
     };
 
-    void setBackground() {
-        binding.colorBackground.getBackground().setTint(Color.rgb(rgb[0],rgb[1],rgb[2]));
+    public void setBackground() {
+        adapter.getFragmentTwo().getBinding().colorBackground.getBackground().setTint(Color.rgb(rgb[0], rgb[1], rgb[2]));
     }
 
     private void checkBluetooth() {
@@ -258,4 +301,5 @@ public class MainActivity extends AppCompatActivity {
             }
         }
     };
+
 }
