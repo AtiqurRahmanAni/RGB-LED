@@ -10,5 +10,6 @@
     <color name="red">#FF0000</color>
     <color name="green">#01A514</color>
     <color name="blue">#0000FF</color>
-    <color name="trans_white">#68FFFFFF</color>
+    <color name="trans_white">#EEFFFFFF</color>
+    <color name="trans_red">#99FF0000</color>
 </resources>

@@ -48,4 +48,8 @@ dependencies {
 
     //colorpicker
     implementation 'com.larswerkman:HoloColorPicker:1.5'
+
+    //Worms dot indicator
+    implementation 'com.tbuonomo.andrui:viewpagerdotsindicator:4.1.2'
+
 }

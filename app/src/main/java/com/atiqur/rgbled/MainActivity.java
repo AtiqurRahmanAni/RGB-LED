@@ -83,58 +83,62 @@ public class MainActivity extends AppCompatActivity {
             adapter.getFragmentOne().getBinding().colorR.setText(String.format("R: %.3s", rgb[0]));
             adapter.getFragmentOne().getBinding().colorG.setText(String.format("G: %.3s", rgb[1]));
             adapter.getFragmentOne().getBinding().colorB.setText(String.format("B: %.3s", rgb[2]));
+            adapter.getFragmentTwo().getBinding().sliderR.setValue(rgb[0]);
+            adapter.getFragmentTwo().getBinding().sliderG.setValue(rgb[1]);
+            adapter.getFragmentTwo().getBinding().sliderB.setValue(rgb[2]);
+            setBackground();
         });
         adapter.getFragmentOne().getBinding().color1.setOnTouchListener((v, event) -> {
-            if(event.getAction() == MotionEvent.ACTION_DOWN){
+            if (event.getAction() == MotionEvent.ACTION_DOWN) {
                 ColorStateList colorStateList = adapter.getFragmentOne().getBinding().color1.getBackgroundTintList();
                 adapter.getFragmentOne().getBinding().picker.setColor(colorStateList.getDefaultColor());
             }
             return false;
         });
         adapter.getFragmentOne().getBinding().color2.setOnTouchListener((v, event) -> {
-            if(event.getAction() == MotionEvent.ACTION_DOWN){
+            if (event.getAction() == MotionEvent.ACTION_DOWN) {
                 ColorStateList colorStateList = adapter.getFragmentOne().getBinding().color2.getBackgroundTintList();
                 adapter.getFragmentOne().getBinding().picker.setColor(colorStateList.getDefaultColor());
             }
             return false;
         });
         adapter.getFragmentOne().getBinding().color3.setOnTouchListener((v, event) -> {
-            if(event.getAction() == MotionEvent.ACTION_DOWN){
+            if (event.getAction() == MotionEvent.ACTION_DOWN) {
                 ColorStateList colorStateList = adapter.getFragmentOne().getBinding().color3.getBackgroundTintList();
                 adapter.getFragmentOne().getBinding().picker.setColor(colorStateList.getDefaultColor());
             }
             return false;
         });
         adapter.getFragmentOne().getBinding().color4.setOnTouchListener((v, event) -> {
-            if(event.getAction() == MotionEvent.ACTION_DOWN){
+            if (event.getAction() == MotionEvent.ACTION_DOWN) {
                 ColorStateList colorStateList = adapter.getFragmentOne().getBinding().color4.getBackgroundTintList();
                 adapter.getFragmentOne().getBinding().picker.setColor(colorStateList.getDefaultColor());
             }
             return false;
         });
         adapter.getFragmentOne().getBinding().color5.setOnTouchListener((v, event) -> {
-            if(event.getAction() == MotionEvent.ACTION_DOWN){
+            if (event.getAction() == MotionEvent.ACTION_DOWN) {
                 ColorStateList colorStateList = adapter.getFragmentOne().getBinding().color5.getBackgroundTintList();
                 adapter.getFragmentOne().getBinding().picker.setColor(colorStateList.getDefaultColor());
             }
             return false;
         });
         adapter.getFragmentOne().getBinding().color6.setOnTouchListener((v, event) -> {
-            if(event.getAction() == MotionEvent.ACTION_DOWN){
+            if (event.getAction() == MotionEvent.ACTION_DOWN) {
                 ColorStateList colorStateList = adapter.getFragmentOne().getBinding().color6.getBackgroundTintList();
                 adapter.getFragmentOne().getBinding().picker.setColor(colorStateList.getDefaultColor());
             }
             return false;
         });
         adapter.getFragmentOne().getBinding().color7.setOnTouchListener((v, event) -> {
-            if(event.getAction() == MotionEvent.ACTION_DOWN){
+            if (event.getAction() == MotionEvent.ACTION_DOWN) {
                 ColorStateList colorStateList = adapter.getFragmentOne().getBinding().color7.getBackgroundTintList();
                 adapter.getFragmentOne().getBinding().picker.setColor(colorStateList.getDefaultColor());
             }
             return false;
         });
         adapter.getFragmentOne().getBinding().color8.setOnTouchListener((v, event) -> {
-            if(event.getAction() == MotionEvent.ACTION_DOWN){
+            if (event.getAction() == MotionEvent.ACTION_DOWN) {
                 ColorStateList colorStateList = adapter.getFragmentOne().getBinding().color8.getBackgroundTintList();
                 adapter.getFragmentOne().getBinding().picker.setColor(colorStateList.getDefaultColor());
             }
@@ -145,6 +149,7 @@ public class MainActivity extends AppCompatActivity {
     private void setPageViewPager() {
         binding.viewPager2.setAdapter(adapter);
         binding.viewPager2.setOffscreenPageLimit(2);
+        binding.dotsIndicator.setViewPager2(binding.viewPager2);
     }
 
     @Override
@@ -192,7 +197,6 @@ public class MainActivity extends AppCompatActivity {
             } else if (event.getAction() == MotionEvent.ACTION_UP) {
                 allow[0] = false;
             }
-            adapter.getFragmentTwo().getBinding().textViewR.setText(String.format("R : %.3s", rgb[0]));
             if (event.getAction() == MotionEvent.ACTION_DOWN && mBluetooth.getState() != 2) {
                 Toast.makeText(MainActivity.this, "You are not connected to a device", Toast.LENGTH_SHORT).show();
             }
@@ -208,7 +212,6 @@ public class MainActivity extends AppCompatActivity {
             } else if (event.getAction() == MotionEvent.ACTION_UP) {
                 allow[1] = false;
             }
-            adapter.getFragmentTwo().getBinding().textViewG.setText(String.format("G : %.3s", rgb[1]));
             if (event.getAction() == MotionEvent.ACTION_DOWN && mBluetooth.getState() != 2) {
                 Toast.makeText(MainActivity.this, "You are not connected to a device", Toast.LENGTH_SHORT).show();
             }
@@ -224,7 +227,6 @@ public class MainActivity extends AppCompatActivity {
             } else if (event.getAction() == MotionEvent.ACTION_UP) {
                 allow[2] = false;
             }
-            adapter.getFragmentTwo().getBinding().textViewB.setText(String.format("B : %.3s", rgb[2]));
             if (event.getAction() == MotionEvent.ACTION_DOWN && mBluetooth.getState() != 2) {
                 Toast.makeText(MainActivity.this, "You are not connected to a device", Toast.LENGTH_SHORT).show();
             }
@@ -235,15 +237,15 @@ public class MainActivity extends AppCompatActivity {
     private final Runnable sendValue = new Runnable() {
         public void run() {
             while (true) {
-                if (allow[0] || prgb[0] != rgb[0]) {
+                if (prgb[0] != rgb[0]) {
                     prgb[0] = rgb[0];
                     mBluetooth.write(HelperUtils.toBytes('R', rgb[0], 3));
                 }
-                if (allow[1] || prgb[1] != rgb[1]) {
+                if (prgb[1] != rgb[1]) {
                     prgb[1] = rgb[1];
                     mBluetooth.write(HelperUtils.toBytes('G', rgb[1], 3));
                 }
-                if (allow[2] || prgb[2] != rgb[2]) {
+                if (prgb[2] != rgb[2]) {
                     prgb[2] = rgb[2];
                     mBluetooth.write(HelperUtils.toBytes('B', rgb[2], 3));
                 }
@@ -259,6 +261,9 @@ public class MainActivity extends AppCompatActivity {
     };
 
     public void setBackground() {
+        adapter.getFragmentTwo().getBinding().textViewR.setText(String.format("R : %.3s", rgb[0]));
+        adapter.getFragmentTwo().getBinding().textViewG.setText(String.format("G : %.3s", rgb[1]));
+        adapter.getFragmentTwo().getBinding().textViewB.setText(String.format("B : %.3s", rgb[2]));
         adapter.getFragmentTwo().getBinding().colorBackground.getBackground().setTint(Color.rgb(rgb[0], rgb[1], rgb[2]));
     }
 
